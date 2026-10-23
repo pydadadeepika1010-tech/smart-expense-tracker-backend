@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <div class="text-center mb-5">
+    <h2 style="font-weight:900; color:#a78bfa;">🎯 Weekly Money Challenges</h2>
+    <p class="text-muted" style="font-size:1.1rem;">Pick a 7-day money challenge, cut unnecessary spending, and supercharge your savings!</p>
+  </div>
+
+  <div class="row g-4">
+    {% for c in challenges %}
+    <div class="col-md-6 col-lg-3">
+      <div class="card h-100 p-4" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:20px; transition:all 0.3s ease;">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <span style="font-size:2.8rem;">{{ c.emoji }}</span>
+          <span class="badge" style="background:{{ c.color }}; color:#fff; font-weight:700; padding:6px 12px; border-radius:12px;">{{ c.diff }}</span>
+        </div>
+        <h5 style="font-weight:800; color:#fff;">{{ c.label }}</h5>
+        <p style="color:#94a3b8; font-size:0.9rem; flex-grow:1; line-height:1.5; margin-top:8px;">{{ c.desc }}</p>
+        
+        <div class="mt-3">
+          <button id="challenge-btn-{{ loop.index }}" class="btn btn-outline-primary w-100" style="border-radius:12px; font-weight:700;" onclick="toggleChallenge('{{ c.label }}', {{ loop.index }})">
+            🚀 Accept Challenge
+          </button>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+function toggleChallenge(label, index) {
+  const btn = document.getElementById('challenge-btn-' + index);
+  if (btn.classList.contains('btn-success')) {
+    btn.classList.remove('btn-success');
+    btn.classList.add('btn-outline-primary');
+    btn.innerHTML = '🚀 Accept Challenge';
+  } else {
+    btn.classList.remove('btn-outline-primary');
+    btn.classList.add('btn-success');
+    btn.innerHTML = '✅ Active Challenge!';
+    alert('🎉 Challenge Accepted: ' + label + '! Stick to it for 7 days and track your savings!');
+  }
+}
+</script>
+{% endblock %}

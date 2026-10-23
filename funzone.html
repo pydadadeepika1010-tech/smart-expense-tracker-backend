@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+  
+  <div class="text-center mb-5">
+    <h2 style="font-weight:900; color:#f472b6;">🔥 Spending Fun Zone & Horror Rating</h2>
+    <p class="text-muted" style="font-size:1.1rem;">Your financial personality roasted, rated, and matched with a custom music playlist!</p>
+  </div>
+
+  <!-- 1. BUDGET HORROR METER -->
+  <div class="row mb-5">
+    <div class="col-12">
+      <div class="card p-4 text-center" style="background:linear-gradient(135deg, rgba(239,68,68,0.1), rgba(126,34,206,0.1)); border:2px dashed {{ horror.color }}; border-radius:24px;">
+        <div style="font-size:4.5rem; margin-bottom:10px;">{{ horror.emoji }}</div>
+        <span class="badge mb-2" style="background:{{ horror.color }}; color:#fff; font-size:1rem; padding:8px 18px; border-radius:20px;">
+          BUDGET HORROR LEVEL: {{ horror.title|upper }}
+        </span>
+        <h3 class="mt-2" style="font-weight:900; color:{{ horror.color }};">{{ horror.title }}</h3>
+        <p class="mt-2 text-light mx-auto" style="max-width:650px; font-size:1.1rem; line-height:1.6;">{{ horror.desc }}</p>
+
+        <div class="mt-4 mx-auto" style="max-width:500px;">
+          <div class="d-flex justify-content-between mb-1" style="font-weight:700; font-size:0.9rem;">
+            <span>Budget Spent: {{ spent_pct }}%</span>
+            <span>Max Limit: 100%</span>
+          </div>
+          <div class="progress" style="height:14px; border-radius:10px; background:rgba(255,255,255,0.1);">
+            <div class="progress-bar" role="progressbar" style="width: {{ spent_pct }}%; background:{{ horror.color }}; border-radius:10px;" aria-valuenow="{{ spent_pct }}" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. SPENDING MOOD & PLAYLIST -->
+  <div class="row mb-5 g-4">
+    <div class="col-md-6">
+      <div class="card h-100 p-4" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:20px;">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <span style="font-size:3.5rem;">{{ mood.emoji }}</span>
+          <div>
+            <span class="badge" style="background:{{ mood.genreBg }}; color:{{ mood.genreCol }}; font-weight:800; padding:6px 14px; border-radius:12px;">
+              {{ mood.genre }}
+            </span>
+            <h4 class="mt-1 mb-0" style="font-weight:800; color:#fff;">{{ mood.name }}</h4>
+          </div>
+        </div>
+        <p style="color:#cbd5e1; font-size:1rem; line-height:1.6;">{{ mood.desc }}</p>
+
+        <hr style="border-color:rgba(255,255,255,0.1); margin:20px 0;">
+
+        <h5 style="font-weight:800; color:#a78bfa;" class="mb-3">🎧 Your Official Spending Playlist:</h5>
+        <div class="d-flex flex-column gap-2">
+          {% for song in mood.songs %}
+          <div class="p-3" style="background:rgba(255,255,255,0.03); border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <strong style="color:#fff;">🎵 {{ song.t }}</strong>
+                <span class="text-muted" style="font-size:0.85rem;"> — {{ song.a }}</span>
+              </div>
+              <span class="badge bg-dark text-muted" style="font-size:0.75rem;">{{ song.w }}</span>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. VERDICT BADGES -->
+    <div class="col-md-6">
+      <div class="card h-100 p-4" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:20px;">
+        <h4 style="font-weight:800; color:#38bdf8;" class="mb-3">🏆 Your Financial Verdict Badges</h4>
+        <p class="text-muted" style="font-size:0.95rem;">Based on your actual transaction history, here is what your spending style says about you:</p>
+
+        <div class="d-flex flex-column gap-3 mt-3">
+          {% for v in verdicts %}
+          <div class="d-flex align-items-start gap-3 p-3" style="background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.2); border-radius:14px;">
+            <span style="font-size:2.4rem;">{{ v[0] }}</span>
+            <div>
+              <h5 class="mb-1" style="font-weight:800; color:#38bdf8;">{{ v[1] }}</h5>
+              <p class="mb-0 text-light" style="font-size:0.9rem; line-height:1.5;">{{ v[2] }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
